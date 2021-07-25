@@ -9,14 +9,4 @@ import { Model } from './Model';
 export class AppComponent {
   title = 'SocialApp';
 
-  model = new Model();
-
-  getName() {
-    return this.model.categoryName;
-  }
-
-  getProducts() {
-    return this.model.products;
-  }
-
 }
