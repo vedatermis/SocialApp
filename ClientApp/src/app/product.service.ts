@@ -29,4 +29,8 @@ export class ProductService {
       p!.isActive = product.isActive;
     }
   }
+
+  deleteProduct(product: Product) {
+    this.model.products = this.model.products.filter(p => p != product);
+  }
 }

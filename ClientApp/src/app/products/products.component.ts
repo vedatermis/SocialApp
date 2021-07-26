@@ -9,15 +9,22 @@ import { ProductService } from '../product.service';
 })
 export class ProductsComponent implements OnInit {
 
-  products: Array<Product> = Array<Product>();
   selectedProduct: Product;
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+
+  }
+
+  getProducts(): Product[] {
+    return this.productService.getProducts();
   }
 
   onSelectedProduct(product: Product) {
     this.selectedProduct = product;
+  }
+
+  deleteProduct(product: Product) {
+    this.productService.deleteProduct(product);
   }
 }
