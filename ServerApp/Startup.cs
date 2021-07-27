@@ -26,6 +26,7 @@ namespace ServerApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        readonly string MyAllowOrigins = "_myAllowOrigins";
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SocialContext>(x => x.UseSqlite("Data Source=SocialDb.db"));
@@ -33,6 +34,14 @@ namespace ServerApp
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ServerApp", Version = "v1" });
+            });
+            services.AddCors(options => 
+            {
+                options.AddPolicy(name: MyAllowOrigins, builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+
+                });
             });
         }
 
@@ -49,6 +58,8 @@ namespace ServerApp
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowOrigins);
 
             app.UseAuthorization();
 

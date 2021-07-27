@@ -12,8 +12,8 @@
         </thead>
         <tbody>
 
-          <tr *ngFor="let item of getProducts()" [class.bg-secondary]="item.isActive == false">
-            <td>{{item.id}}</td>
+          <tr *ngFor="let item of products" [class.bg-secondary]="item.isActive == false">
+            <td>{{item.productId}}</td>
             <td>{{item.name}}</td>
             <td>{{item.price}}</td>
             <td>
@@ -26,9 +26,9 @@
 
     </div>
     <div class="col-md-5">
-      <product-details [product]="selectedProduct"></product-details>
+      <product-details [product]="selectedProduct" [products]="products"></product-details>
       <hr class="my-3">
-      <product-form></product-form>
+      <product-form [products]="products"></product-form>
     </div>
   </div>
 </div>

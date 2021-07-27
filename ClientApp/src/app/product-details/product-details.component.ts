@@ -10,6 +10,8 @@ import { ProductService } from '../product.service';
 export class ProductDetailsComponent implements OnInit {
 
   @Input() product: Product;
+  @Input() products: Product[];
+
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -18,7 +20,9 @@ export class ProductDetailsComponent implements OnInit {
   addProduct(id: string, name: string, price: string, isActive: boolean) {
 
     const product = new Product(Number(id), name, Number(price), isActive);
-    this.productService.saveProduct(product);
+    this.productService.updateProduct(product).subscribe(result => {
+      this.products.splice(this.products.findIndex(x => x.productId == product.productId), 1, product);
+    });
     this.product = null;
   }
 
