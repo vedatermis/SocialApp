@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServerApp.Dto
 {
-    public class UserDto
+    public class UserForRegisterDto
     {
+        [Required]
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
