@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +9,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
+import { MemberListComponent } from './member-list/member-list.component';
+import { FriendListComponent } from './friend-list/friend-list.component';
+import { HomeComponent } from './home/home.component';
+import { MessagesComponent } from './messages/messages.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { appRoutes } from './routes';
+import { AuthGuard } from './_guards/auth-guard';
 
 @NgModule({
   declarations: [
@@ -15,14 +25,23 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     NavbarComponent,
     ProductsComponent,
     ProductFormComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    RegisterComponent,
+    MemberListComponent,
+    FriendListComponent,
+    HomeComponent,
+    MessagesComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
