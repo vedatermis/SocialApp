@@ -5,7 +5,7 @@ namespace ServerApp.Dto
 {
     public class UserForRegisterDto
     {
-        [Required]
+        [Required(ErrorMessage = "Name Gereklidir.")]
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }

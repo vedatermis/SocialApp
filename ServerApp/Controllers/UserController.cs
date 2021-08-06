@@ -30,6 +30,11 @@ namespace ServerApp.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var user = new User();
             user.UserName = model.UserName;
             user.Email = model.Email;

@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -90,10 +93,34 @@ namespace ServerApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ServerApp v1"));
+                
+            }
+            else
+            {
+                app.UseExceptionHandler(appError =>
+                {
+                    appError.Run(async context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.ContentType = "application/json";
+
+                        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+                        if (contextFeature != null)
+                        {
+                            //loglama
+                            await context.Response.WriteAsync(new ErrorDetails
+                            {
+                                StatusCode = context.Response.StatusCode,
+                                Message = contextFeature.Error.Message
+                            }.ToString());
+                        }
+                    });
+                });
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ServerApp v1"));
             //app.UseHttpsRedirection();
 
             app.UseRouting();
