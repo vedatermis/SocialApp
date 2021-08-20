@@ -14,13 +14,13 @@ namespace ServerApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController: ControllerBase
+    public class AuthController: ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,8 +40,8 @@ namespace ServerApp.Controllers
             user.Email = model.Email;
             user.Name = model.Name;
             user.Gender = model.Gender;
-            user.Created = System.DateTime.Now;
-            user.LastActive = System.DateTime.Now;
+            user.Created = DateTime.Now;
+            user.LastActive = DateTime.Now;
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
